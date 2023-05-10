@@ -29,8 +29,10 @@
                     <ul class="navbar-nav">
                     {% set route = app.request.attributes.get('_route') %}
                         {% if app.user %}
-                            <li><a class="nav-link {% if route == 'app_list' %}active{%endif%}" href="{{ path('app_list') }}">View List</a></li>
+                            <li><a class="nav-link {% if route == 'show_all_articles' %}active{%endif%}" href="{{ path('show_all_articles') }}">View Articles</a></li>
+                            <li><a class="nav-link {% if route == 'app_article' %}active{%endif%}" href="{{ path('app_article') }}">Create Articles</a></li>
                             <li><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
+
                         {% endif %}
                         {% if not app.user %}
                             <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
