@@ -136,6 +136,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->articles;
     }
 
+    /**
+     * @return ?Article
+     */
+    public function getArticleById( $id ): ?Article
+    {
+        foreach( $this->getArticles() as $article )
+        {
+            if( $article->getId() == $id )
+            {
+                return $article;
+            }
+        } 
+        return null;
+    }
+
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
