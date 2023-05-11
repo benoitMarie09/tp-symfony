@@ -18,25 +18,24 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Bonjour {% if app.user %}{{ app.user.name|capitalize }}{% endif %}</a>
+                <a class="navbar-brand" href="show_all_articles">Bonjour {% if app.user %}{{ app.user.name|capitalize }}{% endif %}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <?php
-                echo 'coucou les amis';
-                ?>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                     {% set route = app.request.attributes.get('_route') %}
                         {% if app.user %}
-                            <li><a class="nav-link {% if route == 'show_all_articles' %}active{%endif%}" href="{{ path('show_all_articles') }}">View Articles</a></li>
+                            <li><a class="nav-link {% if route == 'show_all_articles' %}active{%endif%}" href="{{ path('show_all_articles') }}">All Articles</a></li>
+                            <li><a class="nav-link {% if route == 'show_user_articles' %}active{%endif%}" href="{{ path('show_user_articles') }}">My Articles</a></li>
                             <li><a class="nav-link {% if route == 'app_article' %}active{%endif%}" href="{{ path('app_article') }}">Create Articles</a></li>
                             <li><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
 
                         {% endif %}
                         {% if not app.user %}
-                            <li><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
-                            <li><a class="nav-link" href="{{ path('app_registration') }}">Register</a></li>
+                        <li><a class="nav-link {% if route == 'show_all_articles' %}active{%endif%}" href="{{ path('show_all_articles') }}">View all Articles</a></li>
+                            <li><a class="nav-link {% if route == 'app_login' %}active{%endif%}" href="{{ path('app_login') }}">Login</a></li>
+                            <li><a class="nav-link {% if route == 'app_registration' %}active{%endif%}" href="{{ path('app_registration') }}">Register</a></li>
                         {% endif %}
                     </ul>
                 </div>

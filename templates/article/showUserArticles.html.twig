@@ -6,15 +6,13 @@
             {# boucle sur le tableau $articles du controller#}
             {% for key, item in articles %}
             <div class="card" style="width: 450px; margin-top: 50px">
-
-            <img height="300" src="{{ vich_uploader_asset(item, 'imageFile')}}" class="card-img-top" alt="{{ item.getImageName }}">
+                <div class="card-header">
+                    Créé le {{ item.getDate|date("d/m/Y") }}
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ item.getTitre }}</h5>
                     <p class="card-text">{{ item.getContenu }}</p>
                     <a href="{{path('show_article',{'id':item.id})}}" class="btn btn-primary">See article</a>
-                </div>
-                <div class="card-footer">
-                    Créé le {{ item.getDate|date("d/m/Y") }}
                 </div>
             </div>
             {% endfor %}

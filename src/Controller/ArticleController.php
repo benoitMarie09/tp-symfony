@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,14 +45,23 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/articles', name: 'show_all_articles')]
-    public function showAll(): Response
+    #[Route('/articles', name: 'show_user_articles')]
+    public function showUserArticles(): Response
     {
         // Récupération de l'utilisateur connecté
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
         // Récupération des articles de l'utilisateur connecté
         $articles = $user->getArticles();
+        return $this->render('article/showUserArticles.html.twig', [
+            'articles' => $articles,
+        ]);
+    }
+
+    #[Route('/', name: 'show_all_articles')]
+    public function showAllArticles( ManagerRegistry $doctrine ): Response
+    {
+        $articles = $doctrine->getRepository(article::class)->findAll();
         return $this->render('article/showAll.html.twig', [
             'articles' => $articles,
         ]);

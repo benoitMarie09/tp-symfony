@@ -17,17 +17,17 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     private $entityManager;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder)
+    public function __construct( UserPasswordHasherInterface $passwordEncoder)
     {
-        $this->entityManager = $entityManager;
+
         $this->passwordEncoder = $passwordEncoder;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            BeforeEntityPersistedEvent::class => ['addUser'],
-            BeforeEntityUpdatedEvent::class => ['updateUser'], //surtout utile lors d'un reset de mot passe plutôt qu'un réel update, car l'update va de nouveau encrypter le mot de passe DEJA encrypté ...
+            BeforeEntityPersistedEvent::class   => ['addUser'],
+            BeforeEntityUpdatedEvent::class     => ['updateUser'], //surtout utile lors d'un reset de mot passe plutôt qu'un réel update, car l'update va de nouveau encrypter le mot de passe DEJA encrypté ...
         ];
     }
 
@@ -64,8 +64,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 $pass
             )
         );
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        // $this->entityManager->persist($entity);
+        // $this->entityManager->flush();
     }
 
 }
