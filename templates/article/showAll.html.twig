@@ -1,24 +1,32 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 d-flex justify-content-around flex-wrap">
-            {# boucle sur le tableau $articles du controller#}
-            {% for key, item in articles %}
-            <div class="card" style="width: 450px; margin-top: 50px">
 
-            <img height="300" src="{{ vich_uploader_asset(item, 'imageFile')}}" class="card-img-top" alt="{{ item.getImageName }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.getTitre }}</h5>
-                    <p class="card-text">{{ item.getContenu }}</p>
-                    <a href="{{path('show_article',{'id':item.id})}}" class="btn btn-primary">See article</a>
-                </div>
-                <div class="card-footer">
-                    Créé le {{ item.getDate|date("d/m/Y") }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+{# display navigation #}
+{{ knp_pagination_render(pagination) }}
+<table class="table">
+    <thead>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th scope="col">{{ knp_pagination_sortable(pagination, '#', 'article.id') }}</th>
+            <th scope="col">
+                {{ knp_pagination_sortable(pagination, 'title', 'article.titre') }}
+            </th>
+            <th scope="col">
+                {{ knp_pagination_sortable(pagination, 'Release', 'article.date') }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {# table body #}
+    {% for article in pagination %}
+            <tr class="color">
+                <td scope="row">{{ article.id }}</td>
+                <td><a href="{{path('show_article',{'id':article.id})}}" class="">{{ article.titre }}</a></td>
+                <td>{{ article.date | date('Y-m-d') }}</td>
+            </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
 {% endblock %}
